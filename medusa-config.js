@@ -23,7 +23,7 @@ import {
   MEILISEARCH_HOST,
   MEILISEARCH_ADMIN_KEY
 } from 'lib/constants';
-import { FaceModule } from 'modules/face';
+import { FaceModule } from "./src/modules/face"
 
 loadEnv(process.env.NODE_ENV, process.cwd());
 
