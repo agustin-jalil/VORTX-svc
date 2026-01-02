@@ -23,6 +23,7 @@ import {
   MEILISEARCH_HOST,
   MEILISEARCH_ADMIN_KEY
 } from 'lib/constants';
+import { FaceModule } from 'modules/face';
 
 loadEnv(process.env.NODE_ENV, process.cwd());
 
@@ -50,6 +51,7 @@ const medusaConfig = {
     disable: SHOULD_DISABLE_ADMIN,
   },
   modules: [
+    FaceModule,
     {
       key: Modules.FILE,
       resolve: '@medusajs/file',

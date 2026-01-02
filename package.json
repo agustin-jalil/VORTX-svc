@@ -21,6 +21,8 @@
     "email:dev": "email dev --dir=./src/modules/email-notifications/templates --port=3002"
   },
   "dependencies": {
+    "@azure/cognitiveservices-face": "^5.0.0",
+    "@azure/ms-rest-js": "^2.7.0",
     "@medusajs/admin-sdk": "2.12.1",
     "@medusajs/admin-shared": "2.12.1",
     "@medusajs/cli": "2.12.1",
