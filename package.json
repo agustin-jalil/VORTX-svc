@@ -38,7 +38,8 @@
     "medusajs-launch-utils": "0.0.18",
     "minio": "^8.0.6",
     "resend": "4.0.1",
-    "ulid": "^2.4.0"
+    "ulid": "^2.4.0",
+    "zod": "^4.3.4"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.12.1",

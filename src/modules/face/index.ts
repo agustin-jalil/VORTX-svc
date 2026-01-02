@@ -1,6 +1,8 @@
 import { Module } from "@medusajs/framework/utils"
-import { FaceModuleService } from "./services"
+import FaceService from "./services"
 
-export const FaceModule = Module("face", {
-  service: FaceModuleService,
+export const FACE_MODULE = "face"
+
+export default Module(FACE_MODULE, {
+  service: FaceService,
 })

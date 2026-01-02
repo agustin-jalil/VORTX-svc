@@ -27,6 +27,10 @@ import { FaceModule } from "./src/modules/face"
 
 loadEnv(process.env.NODE_ENV, process.cwd());
 
+// Al inicio del archivo, obtén las variables de entorno
+const AZURE_FACE_ENDPOINT = process.env.AZURE_FACE_ENDPOINT
+const AZURE_FACE_KEY = process.env.AZURE_FACE_KEY
+
 const medusaConfig = {
   projectConfig: {
     databaseUrl: DATABASE_URL,
@@ -51,7 +55,13 @@ const medusaConfig = {
     disable: SHOULD_DISABLE_ADMIN,
   },
   modules: [
-    FaceModule,
+    ...(AZURE_FACE_ENDPOINT && AZURE_FACE_KEY ? [{
+      resolve: './src/modules/face',
+      options: {
+        endpoint: AZURE_FACE_ENDPOINT,
+        apiKey: AZURE_FACE_KEY,
+      }
+    }] : []),
     {
       key: Modules.FILE,
       resolve: '@medusajs/file',
