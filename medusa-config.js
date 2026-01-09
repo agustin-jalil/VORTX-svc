@@ -162,11 +162,12 @@ const medusaConfig = {
         providers: [
 
           {
-            resolve: "@medusajs/auth/providers/google",
+            resolve: "@medusajs/medusa/auth-google",
+            id: "google",
             options: {
               clientId: process.env.GOOGLE_CLIENT_ID,
               clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-              callbackUrl: "/auth/customer/google/callback",
+              callbackUrl: process.env.GOOGLE_CALLBACK_URL,
             },
           },
 
