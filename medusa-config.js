@@ -164,23 +164,23 @@ const medusaConfig = {
           {
             resolve: "@medusajs/auth/providers/google",
             options: {
-              clientId: process.env.GOOGLE_CLIENT_ID!,
-              clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+              clientId: process.env.GOOGLE_CLIENT_ID,
+              clientSecret: process.env.GOOGLE_CLIENT_SECRET,
               callbackUrl: "/auth/customer/google/callback",
             },
           },
 
                     // 🍎 APPLE
-          {
-            resolve: "@medusajs/auth/providers/apple",
-            options: {
-              clientId: process.env.APPLE_CLIENT_ID!,
-              teamId: process.env.APPLE_TEAM_ID!,
-              keyId: process.env.APPLE_KEY_ID!,
-              privateKey: process.env.APPLE_PRIVATE_KEY!,
-              callbackUrl: "/auth/customer/apple/callback",
-            },
-          },
+          // {
+          //   resolve: "@medusajs/auth/providers/apple",
+          //   options: {
+          //     clientId: process.env.APPLE_CLIENT_ID,
+          //     teamId: process.env.APPLE_TEAM_ID,
+          //     keyId: process.env.APPLE_KEY_ID,
+          //     privateKey: process.env.APPLE_PRIVATE_KEY,
+          //     callbackUrl: "/auth/customer/apple/callback",
+          //   },
+          // },
         ]
       }
     }
