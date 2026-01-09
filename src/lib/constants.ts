@@ -100,3 +100,15 @@ export const WORKER_MODE =
  * Disable Admin
  */
 export const SHOULD_DISABLE_ADMIN = process.env.MEDUSA_DISABLE_ADMIN === 'true'
+
+/**
+Mercado Pago configuration
+ */
+export const MERCADOPAGO_ACCESS_TOKEN = process.env.MERCADOPAGO_ACCESS_TOKEN
+export const MERCADOPAGO_PUBLIC_KEY = process.env.MERCADOPAGO_PUBLIC_KEY
+export const MERCADOPAGO_SANDBOX = process.env.MERCADOPAGO_SANDBOX === 'true'
+
+
+// AUTH CON GOOGLE
+export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
+export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
