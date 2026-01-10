@@ -189,8 +189,8 @@ const medusaConfig = {
           // strict: "all", // or "none" or "store" or "admin"
           strict: "none",
           identifier: "google",
-          clientID: GoogleClientId,
-          clientSecret: GoogleClientSecret,
+          clientID: GOOGLE_CLIENT_ID,
+          clientSecret: GOOGLE_CLIENT_SECRET,
           admin: {
             callbackUrl: `${BACKEND_URL}/admin/auth/google/cb`,
             failureRedirect: `${ADMIN_URL}/login`,
