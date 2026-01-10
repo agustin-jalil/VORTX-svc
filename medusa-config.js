@@ -168,6 +168,8 @@ const medusaConfig = {
               clientId: process.env.GOOGLE_CLIENT_ID,
               clientSecret: process.env.GOOGLE_CLIENT_SECRET,
               callbackUrl: process.env.GOOGLE_CALLBACK_URL,
+              successRedirect: process.env.AUTH_CALLBACK_URL,
+              failureRedirect: `${process.env.AUTH_CALLBACK_URL}?error=auth_failed`,
             },
           },
 
