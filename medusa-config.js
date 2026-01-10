@@ -162,7 +162,7 @@ const medusaConfig = {
         providers: [
 
           {
-            resolve: "@medusajs/auth-google"
+            resolve: "@medusajs/auth-google",
             id: "google",
             options: {
               clientId: process.env.GOOGLE_CLIENT_ID,
