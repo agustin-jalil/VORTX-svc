@@ -12,7 +12,6 @@ export const IS_DEV = process.env.NODE_ENV === 'development'
 /**
  * Public URL for the backend
  */
-export const BACKEND_URL = process.env.BACKEND_PUBLIC_URL ?? process.env.RAILWAY_PUBLIC_DOMAIN_VALUE ?? 'http://localhost:9000'
 
 /**
  * Database URL for Postgres instance used by the backend
@@ -112,3 +111,8 @@ export const MERCADOPAGO_SANDBOX = process.env.MERCADOPAGO_SANDBOX === 'true'
 // AUTH CON GOOGLE
 export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
+
+//AUTH URLS
+export const ADMIN_URL = process.env.ADMIN_URL
+export const STORE_URL = process.env.STORE_URL
+export const BACKEND_URL = process.env.BACKEND_URL
