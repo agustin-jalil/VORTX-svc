@@ -156,35 +156,6 @@ const medusaConfig = {
         sandbox: MERCADOPAGO_SANDBOX,
       }
     }] : []),
-    {
-      resolve: "@medusajs/auth",
-      options: {
-        providers: [
-
-          {
-            resolve: "@medusajs/auth-google",
-            id: "google",
-            options: {
-              clientId: process.env.GOOGLE_CLIENT_ID,
-              clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-              callbackUrl: process.env.GOOGLE_CALLBACK_URL,
-            },
-          },
-
-                    // 🍎 APPLE
-          // {
-          //   resolve: "@medusajs/auth/providers/apple",
-          //   options: {
-          //     clientId: process.env.APPLE_CLIENT_ID,
-          //     teamId: process.env.APPLE_TEAM_ID,
-          //     keyId: process.env.APPLE_KEY_ID,
-          //     privateKey: process.env.APPLE_PRIVATE_KEY,
-          //     callbackUrl: "/auth/customer/apple/callback",
-          //   },
-          // },
-        ]
-      }
-    }
   ],
   plugins: [
   ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
@@ -208,7 +179,47 @@ const medusaConfig = {
           }
         }
       }
-    }] : [])
+    }] : []),
+    {
+      resolve: "medusa-plugin-auth",
+      /** @type {import('medusa-plugin-auth').AuthOptions} */
+      options: [
+        {
+          type: "google",
+          // strict: "all", // or "none" or "store" or "admin"
+          strict: "none",
+          identifier: "google",
+          clientID: GoogleClientId,
+          clientSecret: GoogleClientSecret,
+          admin: {
+            callbackUrl: `${BACKEND_URL}/admin/auth/google/cb`,
+            failureRedirect: `${ADMIN_URL}/login`,
+            // The success redirect can be overriden from the client by adding a query param `?redirectTo=your_url` to the auth url
+            // This query param will have the priority over this configuration
+            successRedirect: `${ADMIN_URL}/`
+            // authPath: '/admin/auth/google',
+            // authCallbackPath: '/admin/auth/google/cb',
+            // expiresIn: 24 * 60 * 60 * 1000,
+            // verifyCallback: (container, req, accessToken, refreshToken, profile, strict) => {
+            //    // implement your custom verify callback here if you need it
+            // },
+          },
+          store: {
+            callbackUrl: `${BACKEND_URL}/store/auth/google/cb`,
+            failureRedirect: `${STORE_URL}/login`,
+            // The success redirect can be overriden from the client by adding a query param `?redirectTo=your_url` to the auth url
+            // This query param will have the priority over this configuration
+            successRedirect: `${STORE_URL}/`
+            // authPath: '/store/auth/google',
+            // authCallbackPath: '/store/auth/google/cb',
+            // expiresIn: 24 * 60 * 60 * 1000,
+            // verifyCallback: (container, req, accessToken, refreshToken, profile, strict) => {
+            //    // implement your custom verify callback here if you need it
+            // },
+          }
+        }
+      ]
+      }
   ]
 };
 
