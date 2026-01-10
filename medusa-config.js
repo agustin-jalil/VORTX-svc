@@ -25,9 +25,9 @@ import {
   MERCADOPAGO_SANDBOX, 
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-  ADMIN_URL,
   STORE_URL,
-  BACKEND_URL
+  BACKEND_URL,
+  ADMIN_URL
 } from 'lib/constants';
 import { FaceModule } from "./src/modules/face"
 
