@@ -25,6 +25,9 @@ import {
   MERCADOPAGO_SANDBOX, 
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_CLIENT_EMAIL,
+  FIREBASE_PRIVATE_KEY,
 } from 'lib/constants';
 import { FaceModule } from "./src/modules/face"
 
@@ -63,6 +66,14 @@ const medusaConfig = {
       options: {
         endpoint: AZURE_FACE_ENDPOINT,
         apiKey: AZURE_FACE_KEY,
+      }
+    }] : []),
+    ...(FIREBASE_PROJECT_ID && FIREBASE_CLIENT_EMAIL && FIREBASE_PRIVATE_KEY ? [{
+      resolve: './src/modules/firebase',
+      options: {
+        projectId: FIREBASE_PROJECT_ID,
+        clientEmail: FIREBASE_CLIENT_EMAIL,
+        privateKey: FIREBASE_PRIVATE_KEY,
       }
     }] : []),
     {

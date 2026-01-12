@@ -106,3 +106,9 @@ Mercado Pago configuration
 export const MERCADOPAGO_ACCESS_TOKEN = process.env.MERCADOPAGO_ACCESS_TOKEN
 export const MERCADOPAGO_PUBLIC_KEY = process.env.MERCADOPAGO_PUBLIC_KEY
 export const MERCADOPAGO_SANDBOX = process.env.MERCADOPAGO_SANDBOX === 'true'
+
+
+// Firebase Admin configuration
+export const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID || '';
+export const FIREBASE_CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL || '';
+export const FIREBASE_PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n') || '';
