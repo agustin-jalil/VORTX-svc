@@ -106,13 +106,3 @@ Mercado Pago configuration
 export const MERCADOPAGO_ACCESS_TOKEN = process.env.MERCADOPAGO_ACCESS_TOKEN
 export const MERCADOPAGO_PUBLIC_KEY = process.env.MERCADOPAGO_PUBLIC_KEY
 export const MERCADOPAGO_SANDBOX = process.env.MERCADOPAGO_SANDBOX === 'true'
-
-
-// AUTH CON GOOGLE
-export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
-export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
-
-//AUTH URLS
-export const ADMIN_URL = process.env.ADMIN_URL
-export const STORE_URL = process.env.STORE_URL
-export const BACKEND_URL = process.env.BACKEND_URL

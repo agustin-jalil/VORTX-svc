@@ -25,9 +25,6 @@ import {
   MERCADOPAGO_SANDBOX, 
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-  STORE_URL,
-  BACKEND_URL,
-  ADMIN_URL
 } from 'lib/constants';
 import { FaceModule } from "./src/modules/face"
 
@@ -182,46 +179,6 @@ const medusaConfig = {
         }
       }
     }] : []),
-    {
-      resolve: "medusa-plugin-auth",
-      /** @type {import('medusa-plugin-auth').AuthOptions} */
-      options: [
-        {
-          type: "google",
-          // strict: "all", // or "none" or "store" or "admin"
-          strict: "none",
-          identifier: "google",
-          clientID: GOOGLE_CLIENT_ID,
-          clientSecret: GOOGLE_CLIENT_SECRET,
-          admin: {
-            callbackUrl: `${BACKEND_URL}/admin/auth/google/cb`,
-            failureRedirect: `${ADMIN_URL}/login`,
-            // The success redirect can be overriden from the client by adding a query param `?redirectTo=your_url` to the auth url
-            // This query param will have the priority over this configuration
-            successRedirect: `${ADMIN_URL}/`
-            // authPath: '/admin/auth/google',
-            // authCallbackPath: '/admin/auth/google/cb',
-            // expiresIn: 24 * 60 * 60 * 1000,
-            // verifyCallback: (container, req, accessToken, refreshToken, profile, strict) => {
-            //    // implement your custom verify callback here if you need it
-            // },
-          },
-          store: {
-            callbackUrl: `${BACKEND_URL}/store/auth/google/cb`,
-            failureRedirect: `${STORE_URL}/login`,
-            // The success redirect can be overriden from the client by adding a query param `?redirectTo=your_url` to the auth url
-            // This query param will have the priority over this configuration
-            successRedirect: `${STORE_URL}/`
-            // authPath: '/store/auth/google',
-            // authCallbackPath: '/store/auth/google/cb',
-            // expiresIn: 24 * 60 * 60 * 1000,
-            // verifyCallback: (container, req, accessToken, refreshToken, profile, strict) => {
-            //    // implement your custom verify callback here if you need it
-            // },
-          }
-        }
-      ]
-      }
   ]
 };
 
