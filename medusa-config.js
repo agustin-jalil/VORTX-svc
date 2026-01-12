@@ -28,6 +28,7 @@ import {
   FIREBASE_PROJECT_ID,
   FIREBASE_CLIENT_EMAIL,
   FIREBASE_PRIVATE_KEY,
+  BACKEND_URL,
 } from 'lib/constants';
 import { FaceModule } from "./src/modules/face"
 

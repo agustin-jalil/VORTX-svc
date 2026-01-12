@@ -13,6 +13,11 @@ export const IS_DEV = process.env.NODE_ENV === 'development'
  * Public URL for the backend
  */
 
+  export const BACKEND_URL = assertValue(
+    process.env.BACKEND_URL,
+    'Environment variable for BACKEND_URL is not set',
+  )
+
 /**
  * Database URL for Postgres instance used by the backend
  */
