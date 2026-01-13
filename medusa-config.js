@@ -1,198 +1,68 @@
-import { loadEnv, Modules, defineConfig } from '@medusajs/utils';
+// medusa-config.js - REFACTORIZADO
+import { loadEnv, defineConfig } from '@medusajs/utils';
 import {
-  ADMIN_CORS,
-  AUTH_CORS,
-  COOKIE_SECRET,
-  DATABASE_URL,
-  JWT_SECRET,
-  REDIS_URL,
-  RESEND_API_KEY,
-  RESEND_FROM_EMAIL,
-  SENDGRID_API_KEY,
-  SENDGRID_FROM_EMAIL,
-  SHOULD_DISABLE_ADMIN,
-  STORE_CORS,
-  STRIPE_API_KEY,
-  STRIPE_WEBHOOK_SECRET,
-  WORKER_MODE,
-  MINIO_ENDPOINT,
-  MINIO_ACCESS_KEY,
-  MINIO_SECRET_KEY,
-  MINIO_BUCKET,
-  MEILISEARCH_HOST,
-  MEILISEARCH_ADMIN_KEY,
-  MERCADOPAGO_ACCESS_TOKEN,
-  MERCADOPAGO_SANDBOX, 
-  GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET,
-  FIREBASE_PROJECT_ID,
-  FIREBASE_CLIENT_EMAIL,
-  FIREBASE_PRIVATE_KEY,
-  BACKEND_URL,
-} from 'lib/constants';
-import { FaceModule } from "./src/modules/face"
+  getFileStorageProvider,
+  getPaymentProviders,
+  getNotificationProvider,
+  getRedisServices,
+  getCustomModules,
+  getMeilisearchPlugin,
+  enabledConfigs,
+} from './config/providers.config';
 
 loadEnv(process.env.NODE_ENV, process.cwd());
 
-// Al inicio del archivo, obtén las variables de entorno
-const AZURE_FACE_ENDPOINT = process.env.AZURE_FACE_ENDPOINT
-const AZURE_FACE_KEY = process.env.AZURE_FACE_KEY
-
-const medusaConfig = {
-  projectConfig: {
-    databaseUrl: DATABASE_URL,
-    databaseLogging: false,
-    redisUrl: REDIS_URL,
-    workerMode: WORKER_MODE,
-    http: {
-      adminCors: ADMIN_CORS,
-      authCors: AUTH_CORS,
-      storeCors: STORE_CORS,
-      jwtSecret: JWT_SECRET,
-      cookieSecret: COOKIE_SECRET
-    },
-    build: {
-      rollupOptions: {
-        external: ["@medusajs/dashboard", "@medusajs/admin-shared"]
-      }
-    }
+// Core project configuration
+const projectConfig = {
+  databaseUrl: process.env.DATABASE_URL,
+  databaseLogging: process.env.NODE_ENV === 'development',
+  redisUrl: process.env.REDIS_URL,
+  workerMode: process.env.WORKER_MODE,
+  http: {
+    adminCors: process.env.ADMIN_CORS,
+    authCors: process.env.AUTH_CORS,
+    storeCors: process.env.STORE_CORS,
+    jwtSecret: process.env.JWT_SECRET,
+    cookieSecret: process.env.COOKIE_SECRET,
   },
-  admin: {
-    backendUrl: BACKEND_URL,
-    disable: SHOULD_DISABLE_ADMIN,
+  build: {
+    rollupOptions: {
+      external: ['@medusajs/dashboard', '@medusajs/admin-shared'],
+    },
   },
-  modules: [
-    ...(AZURE_FACE_ENDPOINT && AZURE_FACE_KEY ? [{
-      resolve: './src/modules/face',
-      options: {
-        endpoint: AZURE_FACE_ENDPOINT,
-        apiKey: AZURE_FACE_KEY,
-      }
-    }] : []),
-    ...(FIREBASE_PROJECT_ID && FIREBASE_CLIENT_EMAIL && FIREBASE_PRIVATE_KEY ? [{
-      resolve: './src/modules/firebase',
-      options: {
-        projectId: FIREBASE_PROJECT_ID,
-        clientEmail: FIREBASE_CLIENT_EMAIL,
-        privateKey: FIREBASE_PRIVATE_KEY,
-      }
-    }] : []),
-    {
-      key: Modules.FILE,
-      resolve: '@medusajs/file',
-      options: {
-        providers: [
-          ...(MINIO_ENDPOINT && MINIO_ACCESS_KEY && MINIO_SECRET_KEY ? [{
-            resolve: './src/modules/minio-file',
-            id: 'minio',
-            options: {
-              endPoint: MINIO_ENDPOINT,
-              accessKey: MINIO_ACCESS_KEY,
-              secretKey: MINIO_SECRET_KEY,
-              bucket: MINIO_BUCKET // Optional, default: medusa-media
-            }
-          }] : [{
-            resolve: '@medusajs/file-local',
-            id: 'local',
-            options: {
-              upload_dir: 'static',
-              backend_url: `${BACKEND_URL}/static`
-            }
-          }])
-        ]
-      }
-    },
-    ...(REDIS_URL ? [{
-      key: Modules.EVENT_BUS,
-      resolve: '@medusajs/event-bus-redis',
-      options: {
-        redisUrl: REDIS_URL
-      }
-    },
-    {
-      key: Modules.WORKFLOW_ENGINE,
-      resolve: '@medusajs/workflow-engine-redis',
-      options: {
-        redis: {
-          url: REDIS_URL,
-        }
-      }
-    }] : []),
-    ...(SENDGRID_API_KEY && SENDGRID_FROM_EMAIL || RESEND_API_KEY && RESEND_FROM_EMAIL ? [{
-      key: Modules.NOTIFICATION,
-      resolve: '@medusajs/notification',
-      options: {
-        providers: [
-          ...(SENDGRID_API_KEY && SENDGRID_FROM_EMAIL ? [{
-            resolve: '@medusajs/notification-sendgrid',
-            id: 'sendgrid',
-            options: {
-              channels: ['email'],
-              api_key: SENDGRID_API_KEY,
-              from: SENDGRID_FROM_EMAIL,
-            }
-          }] : []),
-          ...(RESEND_API_KEY && RESEND_FROM_EMAIL ? [{
-            resolve: './src/modules/email-notifications',
-            id: 'resend',
-            options: {
-              channels: ['email'],
-              api_key: RESEND_API_KEY,
-              from: RESEND_FROM_EMAIL,
-            },
-          }] : []),
-        ]
-      }
-    }] : []),
-    ...(STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET ? [{
-      key: Modules.PAYMENT,
-      resolve: '@medusajs/payment',
-      options: {
-        providers: [
-          {
-            resolve: '@medusajs/payment-stripe',
-            id: 'stripe',
-            options: {
-              apiKey: STRIPE_API_KEY,
-              webhookSecret: STRIPE_WEBHOOK_SECRET,
-            },
-          },
-        ],
-      },
-    }] : []),
-    ...(MERCADOPAGO_ACCESS_TOKEN ? [{
-      resolve: './src/modules/mercadopago',
-      options: {
-        accessToken: MERCADOPAGO_ACCESS_TOKEN,
-        sandbox: MERCADOPAGO_SANDBOX,
-      }
-    }] : []),
-  ],
-  plugins: [
-  ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
-      resolve: '@rokmohar/medusa-plugin-meilisearch',
-      options: {
-        config: {
-          host: MEILISEARCH_HOST,
-          apiKey: MEILISEARCH_ADMIN_KEY
-        },
-        settings: {
-          products: {
-            type: 'products',
-            enabled: true,
-            fields: ['id', 'title', 'description', 'handle', 'variant_sku', 'thumbnail'],
-            indexSettings: {
-              searchableAttributes: ['title', 'description', 'variant_sku'],
-              displayedAttributes: ['id', 'handle', 'title', 'description', 'variant_sku', 'thumbnail'],
-              filterableAttributes: ['id', 'handle'],
-            },
-            primaryKey: 'id',
-          }
-        }
-      }
-    }] : []),
-  ]
 };
 
-console.log(JSON.stringify(medusaConfig, null, 2));
+// Admin configuration
+const adminConfig = {
+  backendUrl: process.env.BACKEND_URL,
+  disable: process.env.SHOULD_DISABLE_ADMIN === 'true',
+};
+
+// Assemble all modules
+const modules = enabledConfigs([
+  ...getCustomModules(),
+  getFileStorageProvider(),
+  ...getRedisServices(),
+  getNotificationProvider(),
+  getPaymentProviders(),
+]);
+
+// Assemble all plugins
+const plugins = enabledConfigs([
+  getMeilisearchPlugin(),
+]);
+
+// Final configuration
+const medusaConfig = {
+  projectConfig,
+  admin: adminConfig,
+  modules,
+  plugins,
+};
+
+// Optional: log in development only
+if (process.env.NODE_ENV === 'development') {
+  console.log('Medusa Configuration:', JSON.stringify(medusaConfig, null, 2));
+}
+
 export default defineConfig(medusaConfig);

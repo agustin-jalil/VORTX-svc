@@ -1,16 +1,7 @@
 // src/modules/firebase/service.ts
 import { Logger } from '@medusajs/framework/types';
 import * as admin from 'firebase-admin';
-
-type InjectedDependencies = {
-  logger: Logger;
-};
-
-type FirebaseServiceOptions = {
-  projectId: string;
-  clientEmail: string;
-  privateKey: string;
-};
+import { FirebaseServiceOptions, InjectedDependencies } from './type';
 
 export default class FirebaseService {
   protected logger_: Logger;
