@@ -7,48 +7,52 @@ interface ProviderConfig {
 }
 
 // FILE STORAGE PROVIDERS
-export function getFileStorageProvider(): ProviderConfig {
-  const {
-    MINIO_ENDPOINT,
-    MINIO_ACCESS_KEY,
-    MINIO_SECRET_KEY,
-    MINIO_BUCKET,
-    BACKEND_URL,
-  } = process.env;
+// export function getFileStorageProvider(): ProviderConfig {
+//   const {
+//     MINIO_ENDPOINT,
+//     MINIO_ACCESS_KEY,
+//     MINIO_SECRET_KEY,
+//     MINIO_BUCKET,
+//     BACKEND_URL,
+//   } = process.env;
 
-  const useMinIO = Boolean(MINIO_ENDPOINT && MINIO_ACCESS_KEY && MINIO_SECRET_KEY);
+//   const useMinIO =
+//     Boolean(MINIO_ENDPOINT && MINIO_ACCESS_KEY && MINIO_SECRET_KEY);
 
-  return {
-    enabled: true,
-    config: {
-      key: 'FILE',
-      resolve: '@medusajs/file',
-      options: {
-        providers: [
-          useMinIO
-            ? {
-                resolve: './src/modules/minio-file',
-                id: 'minio',
-                options: {
-                  endPoint: MINIO_ENDPOINT,
-                  accessKey: MINIO_ACCESS_KEY,
-                  secretKey: MINIO_SECRET_KEY,
-                  bucket: MINIO_BUCKET || 'medusa-media',
-                },
-              }
-            : {
-                resolve: '@medusajs/file-local',
-                id: 'local',
-                options: {
-                  upload_dir: 'static',
-                  backend_url: `${BACKEND_URL}/static`,
-                },
-              },
-        ],
-      },
-    },
-  };
-}
+//   return {
+//     enabled: true,
+//     config: {
+//       key: 'FILE',
+//       resolve: '@medusajs/file',
+//       options: {
+//         providers: [
+//           useMinIO
+//             ? {
+//                 resolve: '@medusajs/file-s3',
+//                 id: 'minio',
+//                 options: {
+//                   endpoint: MINIO_ENDPOINT,
+//                   access_key_id: MINIO_ACCESS_KEY,
+//                   secret_access_key: MINIO_SECRET_KEY,
+//                   bucket: MINIO_BUCKET || 'medusa-media',
+//                   region: 'us-east-1',
+//                   force_path_style: true,
+//                 },
+//               }
+//             : {
+//                 resolve: '@medusajs/file-local',
+//                 id: 'local',
+//                 options: {
+//                   upload_dir: 'static',
+//                   backend_url: `${BACKEND_URL}/static`,
+//                 },
+//               },
+//         ],
+//       },
+//     },
+//   };
+// }
+
 
 // PAYMENT PROVIDERS
 export function getPaymentProviders(): ProviderConfig {
@@ -158,16 +162,16 @@ export function getRedisServices(): ProviderConfig[] {
         options: { redisUrl: REDIS_URL },
       },
     },
-    {
-      enabled: true,
-      config: {
-        key: 'WORKFLOW_ENGINE',
-        resolve: '@medusajs/workflow-engine-redis',
-        options: {
-          redis: { url: REDIS_URL },
-        },
-      },
-    },
+    // {
+    //   enabled: true,
+    //   config: {
+    //     key: 'WORKFLOW_ENGINE',
+    //     resolve: '@medusajs/workflow-engine-redis',
+    //     options: {
+    //       redis: { url: REDIS_URL },
+    //     },
+    //   },
+    // },
   ];
 }
 
@@ -227,6 +231,7 @@ export function getCustomModules(): ProviderConfig[] {
       },
     });
   }
+
 
   modules.push({
     enabled: true,

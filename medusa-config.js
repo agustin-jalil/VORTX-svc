@@ -41,7 +41,7 @@ const adminConfig = {
 // Assemble all modules
 const modules = enabledConfigs([
   ...getCustomModules(),
-  getFileStorageProvider(),
+  // getFileStorageProvider(),
   ...getRedisServices(),
   getNotificationProvider(),
   getPaymentProviders(),
