@@ -228,6 +228,14 @@ export function getCustomModules(): ProviderConfig[] {
     });
   }
 
+  modules.push({
+    enabled: true,
+    config: {
+      resolve: './src/modules/wishlist',
+      options: {}
+    }
+  })
+
   return modules;
 }
 
