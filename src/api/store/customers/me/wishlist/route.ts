@@ -2,9 +2,9 @@
 import { MedusaResponse, MedusaStoreRequest } from "@medusajs/framework/http"
 import { Modules } from "@medusajs/framework/utils"
 import { IProductModuleService } from "@medusajs/framework/types"
-import { WISHLIST_MODULE } from "../../../../../modules/wishlist"
-import WishlistService from "../../../../../modules/wishlist/service"
 import { z } from "zod"
+import WishlistService from "modules/wishlist/service"
+import { WISHLIST_MODULE } from "modules/wishlist"
 
 const AddToWishlistSchema = z.object({
   product_id: z.string(),

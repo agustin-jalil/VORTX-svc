@@ -1,7 +1,7 @@
 // src/api/store/customers/me/wishlist/[id]/route.ts
 import { MedusaRequest, MedusaResponse, MedusaStoreRequest } from "@medusajs/framework/http"
-import { WISHLIST_MODULE } from "../../../../../../modules/wishlist"
-import WishlistService from "../../../../../../modules/wishlist/service"
+import { WISHLIST_MODULE } from "modules/wishlist"
+import WishlistService from "modules/wishlist/service"
 
 /**
  * DELETE /store/customers/me/wishlist/:id
