@@ -19,9 +19,9 @@ const projectConfig = {
   redisUrl: process.env.REDIS_URL,
   workerMode: process.env.WORKER_MODE,
   http: {
-    adminCors: "https://vortx-frn-test.up.railway.app,http://localhost:3000,http://localhost:3001,https://backend-test-b960.up.railway.app, http://192.168.11.38:3000",
-    authCors: "https://vortx-frn-test.up.railway.app,http://localhost:3000,http://localhost:3001,https://backend-test-b960.up.railway.app, http://192.168.11.38:3000",
-    storeCors: "https://vortx-frn-test.up.railway.app,http://localhost:3000,http://localhost:3001,https://backend-test-b960.up.railway.app, http://192.168.11.38:3000",
+    adminCors: process.env.ADMIN_CORS,
+    authCors: process.env.AUTH_CORS,
+    storeCors: process.env.STORE_CORS,
     jwtSecret: process.env.JWT_SECRET,
     cookieSecret: process.env.COOKIE_SECRET,
   },
