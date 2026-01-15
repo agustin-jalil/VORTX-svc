@@ -1,20 +1,52 @@
-import { MedusaRequest, MedusaResponse, MedusaNextFunction } from "@medusajs/medusa"
+import { defineMiddlewares } from "@medusajs/framework/http"
+import type {
+  MedusaNextFunction,
+  MedusaRequest,
+  MedusaResponse,
+} from "@medusajs/framework/http"
+import { ConfigModule } from "@medusajs/framework/types"
+import { parseCorsOrigins } from "@medusajs/framework/utils"
 import cors from "cors"
 
-const storeCors = cors({
-  origin: process.env.STORE_CORS?.split(","),
-  credentials: true,
+export default defineMiddlewares({
+  routes: [
+    {
+      matcher: "/store/firebase-auth*",
+      middlewares: [
+        (
+          req: MedusaRequest,
+          res: MedusaResponse,
+          next: MedusaNextFunction
+        ) => {
+          const configModule = req.scope.resolve<ConfigModule>("configModule")
+
+          return cors({
+            origin: parseCorsOrigins(
+              configModule.projectConfig.http.storeCors
+            ),
+            credentials: true,
+          })(req, res, next)
+        },
+      ],
+    },
+    {
+      matcher: "/store/firebase-customer*",
+      middlewares: [
+        (
+          req: MedusaRequest,
+          res: MedusaResponse,
+          next: MedusaNextFunction
+        ) => {
+          const configModule = req.scope.resolve<ConfigModule>("configModule")
+
+          return cors({
+            origin: parseCorsOrigins(
+              configModule.projectConfig.http.storeCors
+            ),
+            credentials: true,
+          })(req, res, next)
+        },
+      ],
+    },
+  ],
 })
-
-export default (router) => {
-  // 🔥 RUTAS CUSTOM FIREBASE
-  router.use(
-    "/store/firebase-auth",
-    storeCors
-  )
-
-  router.use(
-    "/store/firebase-customer",
-    storeCors
-  )
-}
