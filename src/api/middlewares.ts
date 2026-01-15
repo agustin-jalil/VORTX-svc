@@ -11,6 +11,15 @@ import cors from "cors"
 export default defineMiddlewares({
   routes: [
     {
+      matcher: "/store/*",
+      method: "OPTIONS",
+      middlewares: [
+        (req: MedusaRequest, res: MedusaResponse) => {
+          res.status(204).end()
+        },
+      ],
+    },
+    {
       matcher: "/store/firebase-auth*",
       middlewares: [
         (
